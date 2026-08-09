@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "539706215164",
+    "project_id": "map-dev-19fb0",
+    "storage_bucket": "map-dev-19fb0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539706215164:android:2a7bce10eab464fe8aa579",
+        "android_client_info": {
+          "package_name": "com.mapdev.map_dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcAe5yz_zyxa-pyIWBFgBXvy-_hitf88o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
