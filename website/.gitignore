@@ -1,0 +1,10 @@
+# Dependencies
+node_modules/
+
+# Build
+dist/
+
+# Local env (Formspree ID, etc.)
+.env
+.env.*
+!.env.example

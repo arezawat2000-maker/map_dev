@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="MAP.DEV — Innovative software solutions. Request a custom app built with our team."
+    />
+    <meta name="theme-color" content="#020b12" />
+    <link rel="icon" type="image/png" href="%BASE_URL%favicon.png" />
+    <link rel="apple-touch-icon" href="%BASE_URL%apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>MAP.DEV — Innovative Software Solutions</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div class="atmosphere" aria-hidden="true">
+      <div class="atmosphere__glow atmosphere__glow--a"></div>
+      <div class="atmosphere__glow atmosphere__glow--b"></div>
+      <div class="atmosphere__circuit"></div>
+    </div>
+
+    <header class="site-header">
+      <a class="skip-link" href="#request">Skip to request form</a>
+    </header>
+
+    <main>
+      <section class="hero" id="top" aria-labelledby="brand-title">
+        <div class="hero__visual">
+          <img
+            class="hero__logo"
+            src="%BASE_URL%assets/logo.png"
+            alt="MAP.DEV logo — compass M emblem with robotic hands and microchip"
+            width="640"
+            height="640"
+          />
+        </div>
+        <div class="hero__copy">
+          <p class="hero__eyebrow">INNOVATIVE SOFTWARE SOLUTIONS</p>
+          <h1 id="brand-title" class="hero__brand">MAP.DEV</h1>
+          <p class="hero__tagline">
+            We build focused, high-impact apps with a team that ships.
+          </p>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="#request">Request an App</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="request" id="request" aria-labelledby="request-heading">
+        <div class="request__inner">
+          <header class="request__intro">
+            <h2 id="request-heading" class="request__title">Request an App</h2>
+            <p class="request__lead">
+              Tell us what you need. We will review your brief and reply with next
+              steps.
+            </p>
+          </header>
+
+          <div class="form-shell" id="form-shell">
+            <form class="app-form" id="app-form" novalidate>
+              <div class="field">
+                <label for="app-name">App name <span class="req" aria-hidden="true">*</span></label>
+                <input
+                  type="text"
+                  id="app-name"
+                  name="app_name"
+                  required
+                  autocomplete="off"
+                  maxlength="120"
+                  placeholder="e.g. FleetTrack"
+                />
+                <p class="field__error" id="app-name-error" role="alert" hidden></p>
+              </div>
+
+              <div class="field">
+                <label for="app-description"
+                  >App description <span class="req" aria-hidden="true">*</span></label
+                >
+                <textarea
+                  id="app-description"
+                  name="app_description"
+                  required
+                  rows="5"
+                  maxlength="4000"
+                  placeholder="What should the app do? Who is it for? Any must-have features?"
+                ></textarea>
+                <p class="field__error" id="app-description-error" role="alert" hidden></p>
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="requester-name">Your name</label>
+                  <input
+                    type="text"
+                    id="requester-name"
+                    name="requester_name"
+                    autocomplete="name"
+                    maxlength="120"
+                    placeholder="Optional"
+                  />
+                </div>
+                <div class="field">
+                  <label for="contact">Email / contact</label>
+                  <input
+                    type="text"
+                    id="contact"
+                    name="contact"
+                    autocomplete="email"
+                    maxlength="200"
+                    placeholder="Optional — so we can reply"
+                  />
+                  <p class="field__error" id="contact-error" role="alert" hidden></p>
+                </div>
+              </div>
+
+              <p class="form-status" id="form-status" role="status" aria-live="polite" hidden></p>
+
+              <button type="submit" class="btn btn--primary btn--submit" id="submit-btn">
+                <span class="btn__label">Send request</span>
+                <span class="btn__spinner" aria-hidden="true"></span>
+              </button>
+            </form>
+
+            <div class="success" id="success" hidden>
+              <div class="success__mark" aria-hidden="true">
+                <svg viewBox="0 0 48 48" width="48" height="48" fill="none">
+                  <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="2" opacity="0.35" />
+                  <path
+                    d="M14 24.5 L21 31.5 L34 16.5"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+              <h3 class="success__title">Request received</h3>
+              <p class="success__text">
+                Thanks — the MAP.DEV team will review
+                <strong id="success-app-name"></strong> and get back to you.
+              </p>
+              <button type="button" class="btn btn--ghost" id="another-request">
+                Submit another request
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p class="site-footer__brand">MAP.DEV</p>
+      <p class="site-footer__tag">Innovative Software Solutions</p>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
