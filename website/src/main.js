@@ -1,9 +1,11 @@
 import { FORMSPREE_ENDPOINT, FORMSPREE_ID } from './config.js';
+import { initI18n, t, renderSuccessText } from './i18n.js';
+
+initI18n();
 
 const form = document.getElementById('app-form');
 const formShell = document.getElementById('form-shell');
 const success = document.getElementById('success');
-const successAppName = document.getElementById('success-app-name');
 const anotherBtn = document.getElementById('another-request');
 const submitBtn = document.getElementById('submit-btn');
 const formStatus = document.getElementById('form-status');
@@ -55,23 +57,20 @@ function validate() {
   const contact = fields.contact.value.trim();
 
   if (!name) {
-    showFieldError(fields.appName, 'App name is required.');
+    showFieldError(fields.appName, t('error_app_name'));
     ok = false;
   }
 
   if (!description) {
-    showFieldError(fields.appDescription, 'App description is required.');
+    showFieldError(fields.appDescription, t('error_app_description'));
     ok = false;
   } else if (description.length < 12) {
-    showFieldError(
-      fields.appDescription,
-      'Please add a bit more detail (at least a short sentence).'
-    );
+    showFieldError(fields.appDescription, t('error_app_description_short'));
     ok = false;
   }
 
   if (contact && contact.includes('@') && !isValidEmail(contact)) {
-    showFieldError(fields.contact, 'Enter a valid email, or a phone / handle without @.');
+    showFieldError(fields.contact, t('error_contact'));
     ok = false;
   }
 
@@ -117,7 +116,7 @@ async function submitToFormspree(payload) {
     const message =
       data?.errors?.map((e) => e.message).join(' ') ||
       data?.error ||
-      'Submission failed. Please try again.';
+      t('error_submit');
     throw new Error(message);
   }
 }
@@ -125,7 +124,7 @@ async function submitToFormspree(payload) {
 function showSuccess(appName) {
   form.hidden = true;
   success.hidden = false;
-  successAppName.textContent = appName;
+  renderSuccessText(appName);
   formShell.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -160,16 +159,13 @@ form?.addEventListener('submit', async (event) => {
       await submitToFormspree(payload);
       showSuccess(payload.app_name);
     } else {
-      showStatus(
-        'Form backend not connected yet. Opening your email client as a temporary fallback…',
-        'info'
-      );
+      showStatus(t('info_mailto'), 'info');
       mailtoFallback(payload);
       // Still show success so the UX is complete during local demos
       window.setTimeout(() => showSuccess(payload.app_name), 600);
     }
   } catch (err) {
-    showStatus(err.message || 'Something went wrong. Please try again.');
+    showStatus(err.message || t('error_generic'));
   } finally {
     submitBtn.classList.remove('is-loading');
     submitBtn.removeAttribute('aria-busy');

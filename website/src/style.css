@@ -16,6 +16,7 @@
   --glow: 0 0 28px rgba(0, 229, 255, 0.35);
   --font-display: 'Orbitron', sans-serif;
   --font-body: 'Rajdhani', sans-serif;
+  --font-rtl: 'Noto Sans Arabic', 'Rajdhani', sans-serif;
   --radius: 14px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -66,8 +67,64 @@ a {
 }
 
 .skip-link:focus {
-  left: 1rem;
+  inset-inline-start: 1rem;
+  left: auto;
   top: 1rem;
+}
+
+/* Language switcher — discreet top corner, hero stays clean */
+.site-header {
+  position: relative;
+  z-index: 20;
+}
+
+.lang-switcher {
+  position: fixed;
+  top: 0.85rem;
+  inset-inline-end: 0.85rem;
+  z-index: 30;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.22rem;
+  border: 1px solid rgba(0, 229, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(2, 14, 20, 0.72);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+}
+
+.lang-switcher__btn {
+  appearance: none;
+  margin: 0;
+  padding: 0.4rem 0.7rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-rtl);
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition:
+    color 0.2s var(--ease),
+    background 0.2s var(--ease);
+}
+
+.lang-switcher__btn:hover {
+  color: var(--text);
+}
+
+.lang-switcher__btn.is-active,
+.lang-switcher__btn[aria-pressed='true'] {
+  color: #021018;
+  background: linear-gradient(135deg, var(--cyan-soft), var(--cyan));
+}
+
+.lang-switcher__btn:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
 }
 
 /* Atmosphere */
@@ -519,7 +576,7 @@ a {
   .hero {
     grid-template-columns: minmax(280px, 420px) minmax(280px, 1fr);
     place-items: center;
-    text-align: left;
+    text-align: start;
     gap: clamp(2rem, 5vw, 4rem);
     max-width: 1100px;
     margin-inline: auto;
@@ -532,6 +589,46 @@ a {
   .hero__tagline {
     margin-inline: 0;
   }
+}
+
+/* RTL — Arabic / Central Kurdish (Sorani) */
+html[dir='rtl'] body {
+  font-family: var(--font-rtl);
+}
+
+html[dir='rtl'] .hero__eyebrow,
+html[dir='rtl'] .request__title,
+html[dir='rtl'] .field label,
+html[dir='rtl'] .btn,
+html[dir='rtl'] .success__title,
+html[dir='rtl'] .site-footer__tag {
+  letter-spacing: 0;
+  text-indent: 0;
+  text-transform: none;
+}
+
+html[dir='rtl'] .hero__brand,
+html[dir='rtl'] .site-footer__brand {
+  font-family: var(--font-display);
+  letter-spacing: 0.08em;
+}
+
+html[dir='rtl'] .field input,
+html[dir='rtl'] .field textarea {
+  font-family: var(--font-rtl);
+  text-align: start;
+}
+
+html[dir='rtl'] .form-status,
+html[dir='rtl'] .field__error,
+html[dir='rtl'] .success__text,
+html[dir='rtl'] .request__lead,
+html[dir='rtl'] .hero__tagline {
+  font-family: var(--font-rtl);
+}
+
+html[dir='rtl'] .lang-switcher__btn[data-lang='en'] {
+  font-family: var(--font-body);
 }
 
 @media (prefers-reduced-motion: reduce) {

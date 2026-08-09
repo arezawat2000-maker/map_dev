@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&family=Orbitron:wght@500;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <title>MAP.DEV — Innovative Software Solutions</title>
@@ -27,7 +27,18 @@
     </div>
 
     <header class="site-header">
-      <a class="skip-link" href="#request">Skip to request form</a>
+      <a class="skip-link" href="#request" data-i18n="skip_link">Skip to request form</a>
+      <div class="lang-switcher" role="group" data-i18n-aria="lang_aria" aria-label="Language">
+        <button type="button" class="lang-switcher__btn" data-lang="en" aria-pressed="true">
+          English
+        </button>
+        <button type="button" class="lang-switcher__btn" data-lang="ckb" aria-pressed="false">
+          کوردی
+        </button>
+        <button type="button" class="lang-switcher__btn" data-lang="ar" aria-pressed="false">
+          عربی
+        </button>
+      </div>
     </header>
 
     <main>
@@ -36,19 +47,20 @@
           <img
             class="hero__logo"
             src="%BASE_URL%assets/logo.png"
+            data-i18n-alt="logo_alt"
             alt="MAP.DEV logo — compass M emblem with robotic hands and microchip"
             width="640"
             height="640"
           />
         </div>
         <div class="hero__copy">
-          <p class="hero__eyebrow">INNOVATIVE SOFTWARE SOLUTIONS</p>
+          <p class="hero__eyebrow" data-i18n="hero_eyebrow">INNOVATIVE SOFTWARE SOLUTIONS</p>
           <h1 id="brand-title" class="hero__brand">MAP.DEV</h1>
-          <p class="hero__tagline">
+          <p class="hero__tagline" data-i18n="hero_tagline">
             We build focused, high-impact apps with a team that ships.
           </p>
           <div class="hero__cta">
-            <a class="btn btn--primary" href="#request">Request an App</a>
+            <a class="btn btn--primary" href="#request" data-i18n="hero_cta">Request an App</a>
           </div>
         </div>
       </section>
@@ -56,8 +68,10 @@
       <section class="request" id="request" aria-labelledby="request-heading">
         <div class="request__inner">
           <header class="request__intro">
-            <h2 id="request-heading" class="request__title">Request an App</h2>
-            <p class="request__lead">
+            <h2 id="request-heading" class="request__title" data-i18n="request_title">
+              Request an App
+            </h2>
+            <p class="request__lead" data-i18n="request_lead">
               Tell us what you need. We will review your brief and reply with next
               steps.
             </p>
@@ -66,7 +80,10 @@
           <div class="form-shell" id="form-shell">
             <form class="app-form" id="app-form" novalidate>
               <div class="field">
-                <label for="app-name">App name <span class="req" aria-hidden="true">*</span></label>
+                <label for="app-name"
+                  ><span data-i18n="label_app_name">App name</span>
+                  <span class="req" aria-hidden="true">*</span></label
+                >
                 <input
                   type="text"
                   id="app-name"
@@ -74,6 +91,7 @@
                   required
                   autocomplete="off"
                   maxlength="120"
+                  data-i18n-placeholder="placeholder_app_name"
                   placeholder="e.g. FleetTrack"
                 />
                 <p class="field__error" id="app-name-error" role="alert" hidden></p>
@@ -81,7 +99,8 @@
 
               <div class="field">
                 <label for="app-description"
-                  >App description <span class="req" aria-hidden="true">*</span></label
+                  ><span data-i18n="label_app_description">App description</span>
+                  <span class="req" aria-hidden="true">*</span></label
                 >
                 <textarea
                   id="app-description"
@@ -89,6 +108,7 @@
                   required
                   rows="5"
                   maxlength="4000"
+                  data-i18n-placeholder="placeholder_app_description"
                   placeholder="What should the app do? Who is it for? Any must-have features?"
                 ></textarea>
                 <p class="field__error" id="app-description-error" role="alert" hidden></p>
@@ -96,24 +116,26 @@
 
               <div class="field-row">
                 <div class="field">
-                  <label for="requester-name">Your name</label>
+                  <label for="requester-name" data-i18n="label_requester_name">Your name</label>
                   <input
                     type="text"
                     id="requester-name"
                     name="requester_name"
                     autocomplete="name"
                     maxlength="120"
+                    data-i18n-placeholder="placeholder_optional"
                     placeholder="Optional"
                   />
                 </div>
                 <div class="field">
-                  <label for="contact">Email / contact</label>
+                  <label for="contact" data-i18n="label_contact">Email / contact</label>
                   <input
                     type="text"
                     id="contact"
                     name="contact"
                     autocomplete="email"
                     maxlength="200"
+                    data-i18n-placeholder="placeholder_contact"
                     placeholder="Optional — so we can reply"
                   />
                   <p class="field__error" id="contact-error" role="alert" hidden></p>
@@ -123,7 +145,7 @@
               <p class="form-status" id="form-status" role="status" aria-live="polite" hidden></p>
 
               <button type="submit" class="btn btn--primary btn--submit" id="submit-btn">
-                <span class="btn__label">Send request</span>
+                <span class="btn__label" data-i18n="submit">Send request</span>
                 <span class="btn__spinner" aria-hidden="true"></span>
               </button>
             </form>
@@ -141,12 +163,12 @@
                   />
                 </svg>
               </div>
-              <h3 class="success__title">Request received</h3>
+              <h3 class="success__title" data-i18n="success_title">Request received</h3>
               <p class="success__text">
                 Thanks — the MAP.DEV team will review
                 <strong id="success-app-name"></strong> and get back to you.
               </p>
-              <button type="button" class="btn btn--ghost" id="another-request">
+              <button type="button" class="btn btn--ghost" id="another-request" data-i18n="another_request">
                 Submit another request
               </button>
             </div>
@@ -157,7 +179,7 @@
 
     <footer class="site-footer">
       <p class="site-footer__brand">MAP.DEV</p>
-      <p class="site-footer__tag">Innovative Software Solutions</p>
+      <p class="site-footer__tag" data-i18n="footer_tag">Innovative Software Solutions</p>
     </footer>
 
     <script type="module" src="/src/main.js"></script>
