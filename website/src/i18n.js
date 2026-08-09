@@ -78,7 +78,7 @@ const dictionaries = {
     success_text:
       'سوپاس — تیمی MAP.DEV پێداچوونەوە بە {app} دەکات و دەگەڕێتەوە لای تۆ.',
     another_request: 'داواکارییەکی تر بنێرە',
-    footer_tag: 'چارەسەری نەرمی نوێخوازانە',
+    footer_tag: 'بەرزترین کوالێتی ',
     error_app_name: 'ناوی ئەپ پێویستە.',
     error_app_description: 'وەسفی ئەپ پێویستە.',
     error_app_description_short:

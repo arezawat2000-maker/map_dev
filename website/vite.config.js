@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  // GitHub Pages project site: https://arezawat2000-maker.github.io/map_dev/
-  base: '/map_dev/',
+  // Custom domain (map_dev.com) — site is served from domain apex
+  base: '/',
   root: '.',
   publicDir: 'public',
   server: {
