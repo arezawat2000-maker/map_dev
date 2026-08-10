@@ -24,6 +24,8 @@
       <div class="atmosphere__glow atmosphere__glow--a"></div>
       <div class="atmosphere__glow atmosphere__glow--b"></div>
       <div class="atmosphere__circuit"></div>
+      <div class="atmosphere__particles" id="particles"></div>
+      <div class="atmosphere__terminal-log" id="bg-terminal"></div>
     </div>
 
     <header class="site-header">
@@ -59,8 +61,88 @@
           <p class="hero__tagline" data-i18n="hero_tagline">
             We build focused, high-impact apps with a team that ships.
           </p>
+          <div class="hero__terminal" aria-hidden="true">
+            <div class="terminal-header">
+              <span class="terminal-dot"></span>
+              <span class="terminal-dot"></span>
+              <span class="terminal-dot"></span>
+            </div>
+            <div class="terminal-body">
+              <code id="typing-code"></code><span class="terminal-cursor"></span>
+            </div>
+          </div>
           <div class="hero__cta">
             <a class="btn btn--primary" href="#request" data-i18n="hero_cta">Request an App</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="tech-stack" aria-labelledby="tech-stack-heading">
+        <h2 id="tech-stack-heading" class="visually-hidden" data-i18n="tech_stack_title">Tech Stack</h2>
+        <div class="tech-stack__marquee">
+          <div class="tech-stack__track">
+            <span>Flutter</span>
+            <span class="dot"></span>
+            <span>React</span>
+            <span class="dot"></span>
+            <span>Node.js</span>
+            <span class="dot"></span>
+            <span>Firebase</span>
+            <span class="dot"></span>
+            <span>AWS</span>
+            <span class="dot"></span>
+            <span>Python</span>
+            <span class="dot"></span>
+            <span>Docker</span>
+            <span class="dot"></span>
+            <span>Kubernetes</span>
+            <span class="dot"></span>
+            
+            <!-- duplicate for seamless loop -->
+            <span>Flutter</span>
+            <span class="dot"></span>
+            <span>React</span>
+            <span class="dot"></span>
+            <span>Node.js</span>
+            <span class="dot"></span>
+            <span>Firebase</span>
+            <span class="dot"></span>
+            <span>AWS</span>
+            <span class="dot"></span>
+            <span>Python</span>
+            <span class="dot"></span>
+            <span>Docker</span>
+            <span class="dot"></span>
+            <span>Kubernetes</span>
+            <span class="dot"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="features" aria-labelledby="features-heading">
+        <div class="features__inner">
+          <h2 id="features-heading" class="features__title" data-i18n="features_title">Why Choose Us</h2>
+          <div class="features__grid">
+            <div class="feature-card">
+              <div class="feature-card__icon">✦</div>
+              <h3 data-i18n="feature_1_title">Quality</h3>
+              <p data-i18n="feature_1_desc">Top-tier code and performance.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-card__icon">⛨</div>
+              <h3 data-i18n="feature_2_title">Security</h3>
+              <p data-i18n="feature_2_desc">Built with safety as a priority.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-card__icon">◈</div>
+              <h3 data-i18n="feature_3_title">Low Cost</h3>
+              <p data-i18n="feature_3_desc">Affordable, scalable solutions.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-card__icon">⟡</div>
+              <h3 data-i18n="feature_4_title">Expert Team</h3>
+              <p data-i18n="feature_4_desc">Experienced industry professionals.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -116,30 +198,57 @@
 
               <div class="field-row">
                 <div class="field">
-                  <label for="requester-name" data-i18n="label_requester_name">Your name</label>
+                  <label for="requester-name"
+                    ><span data-i18n="label_requester_name">Your name</span>
+                    <span class="req" aria-hidden="true">*</span></label
+                  >
                   <input
                     type="text"
                     id="requester-name"
                     name="requester_name"
                     autocomplete="name"
+                    required
                     maxlength="120"
                     data-i18n-placeholder="placeholder_optional"
                     placeholder="Optional"
                   />
+                  <p class="field__error" id="requester-name-error" role="alert" hidden></p>
                 </div>
                 <div class="field">
-                  <label for="contact" data-i18n="label_contact">Email / contact</label>
+                  <label for="contact"
+                    ><span data-i18n="label_contact">Email</span>
+                    <span class="req" aria-hidden="true">*</span></label
+                  >
                   <input
-                    type="text"
+                    type="email"
                     id="contact"
                     name="contact"
                     autocomplete="email"
+                    required
                     maxlength="200"
                     data-i18n-placeholder="placeholder_contact"
                     placeholder="Optional — so we can reply"
                   />
                   <p class="field__error" id="contact-error" role="alert" hidden></p>
                 </div>
+              </div>
+
+              <div class="field">
+                <label for="phone-number"
+                  ><span data-i18n="label_phone">Phone Number</span>
+                  <span class="req" aria-hidden="true">*</span></label
+                >
+                <input
+                  type="tel"
+                  id="phone-number"
+                  name="phone_number"
+                  autocomplete="tel"
+                  required
+                  maxlength="50"
+                  data-i18n-placeholder="placeholder_phone"
+                  placeholder="e.g. +1 234 567 8900"
+                />
+                <p class="field__error" id="phone-number-error" role="alert" hidden></p>
               </div>
 
               <p class="form-status" id="form-status" role="status" aria-live="polite" hidden></p>

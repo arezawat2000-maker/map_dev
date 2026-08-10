@@ -1,4 +1,3 @@
-import { FORMSPREE_ENDPOINT, FORMSPREE_ID } from './config.js';
 import { initI18n, t, renderSuccessText } from './i18n.js';
 
 initI18n();
@@ -15,6 +14,7 @@ const fields = {
   appDescription: document.getElementById('app-description'),
   requesterName: document.getElementById('requester-name'),
   contact: document.getElementById('contact'),
+  phoneNumber: document.getElementById('phone-number'),
 };
 
 function clearErrors() {
@@ -54,7 +54,9 @@ function validate() {
 
   const name = fields.appName.value.trim();
   const description = fields.appDescription.value.trim();
+  const requesterName = fields.requesterName.value.trim();
   const contact = fields.contact.value.trim();
+  const phoneNumber = fields.phoneNumber.value.trim();
 
   if (!name) {
     showFieldError(fields.appName, t('error_app_name'));
@@ -69,55 +71,41 @@ function validate() {
     ok = false;
   }
 
-  if (contact && contact.includes('@') && !isValidEmail(contact)) {
+  if (!requesterName) {
+    showFieldError(fields.requesterName, t('error_requester_name'));
+    ok = false;
+  }
+
+  if (!contact) {
+    showFieldError(fields.contact, t('error_contact_req'));
+    ok = false;
+  } else if (!isValidEmail(contact)) {
     showFieldError(fields.contact, t('error_contact'));
+    ok = false;
+  }
+
+  if (!phoneNumber) {
+    showFieldError(fields.phoneNumber, t('error_phone'));
     ok = false;
   }
 
   return ok;
 }
 
-function mailtoFallback(payload) {
-  const subject = encodeURIComponent(`App request: ${payload.app_name}`);
-  const body = encodeURIComponent(
-    [
-      `App name: ${payload.app_name}`,
-      '',
-      'Description:',
-      payload.app_description,
-      '',
-      `Requester: ${payload.requester_name || '(not provided)'}`,
-      `Contact: ${payload.contact || '(not provided)'}`,
-    ].join('\n')
-  );
-  window.location.href = `mailto:hello@map.dev?subject=${subject}&body=${body}`;
-}
-
-function isFormspreeConfigured() {
-  return FORMSPREE_ID && FORMSPREE_ID !== 'YOUR_FORM_ID';
-}
-
-async function submitToFormspree(payload) {
-  const response = await fetch(FORMSPREE_ENDPOINT, {
+async function submitToFirebase(payload) {
+  const response = await fetch('https://map-dev-19fb0-default-rtdb.firebaseio.com/requests.json', {
     method: 'POST',
     headers: {
-      Accept: 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       ...payload,
-      _subject: `MAP.DEV app request: ${payload.app_name}`,
+      timestamp: new Date().toISOString()
     }),
   });
 
-  const data = await response.json().catch(() => ({}));
-
   if (!response.ok) {
-    const message =
-      data?.errors?.map((e) => e.message).join(' ') ||
-      data?.error ||
-      t('error_submit');
-    throw new Error(message);
+    throw new Error(t('error_submit'));
   }
 }
 
@@ -149,21 +137,15 @@ form?.addEventListener('submit', async (event) => {
     app_description: fields.appDescription.value.trim(),
     requester_name: fields.requesterName.value.trim(),
     contact: fields.contact.value.trim(),
+    phone_number: fields.phoneNumber.value.trim(),
   };
 
   submitBtn.classList.add('is-loading');
   submitBtn.setAttribute('aria-busy', 'true');
 
   try {
-    if (isFormspreeConfigured()) {
-      await submitToFormspree(payload);
-      showSuccess(payload.app_name);
-    } else {
-      showStatus(t('info_mailto'), 'info');
-      mailtoFallback(payload);
-      // Still show success so the UX is complete during local demos
-      window.setTimeout(() => showSuccess(payload.app_name), 600);
-    }
+    await submitToFirebase(payload);
+    showSuccess(payload.app_name);
   } catch (err) {
     showStatus(err.message || t('error_generic'));
   } finally {
@@ -175,7 +157,7 @@ form?.addEventListener('submit', async (event) => {
 anotherBtn?.addEventListener('click', resetToForm);
 
 // Clear field error as the user edits
-['appName', 'appDescription', 'contact'].forEach((key) => {
+['appName', 'appDescription', 'requesterName', 'contact', 'phoneNumber'].forEach((key) => {
   fields[key]?.addEventListener('input', () => {
     const field = fields[key].closest('.field');
     const error = document.getElementById(`${fields[key].id}-error`);
@@ -186,3 +168,78 @@ anotherBtn?.addEventListener('click', resetToForm);
     }
   });
 });
+
+// Typing effect
+const typingCode = document.getElementById('typing-code');
+const codeStrings = [
+  'Initializing MAP.DEV...',
+  'function buildApp() {\n  return innovation;\n}',
+  'Connecting to mainframe...',
+  'Deploying secure scalable solutions...',
+  'mapDev.innovate(idea).launch();'
+];
+let stringIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+
+function typeCode() {
+  if (!typingCode) return;
+  
+  const currentString = codeStrings[stringIndex];
+  
+  if (isDeleting) {
+    typingCode.textContent = currentString.substring(0, charIndex - 1);
+    charIndex--;
+    
+    if (charIndex === 0) {
+      isDeleting = false;
+      stringIndex = (stringIndex + 1) % codeStrings.length;
+      setTimeout(typeCode, 500); // Wait before typing next
+    } else {
+      setTimeout(typeCode, 20); // Fast delete
+    }
+  } else {
+    typingCode.textContent = currentString.substring(0, charIndex + 1);
+    charIndex++;
+    
+    if (charIndex === currentString.length) {
+      isDeleting = true;
+      // If it's a code block, add some raw highlighting class logic if needed, but plain text works well for cycling.
+      setTimeout(typeCode, 2000); // Wait before deleting
+    } else {
+      setTimeout(typeCode, Math.random() * 40 + 40);
+    }
+  }
+}
+
+// Background terminal log effect
+const bgTerminal = document.getElementById('bg-terminal');
+const logLines = [
+  '[OK] Core system booted.',
+  'Load balancer configuring... 100%',
+  'Connecting to cluster node #4...',
+  'Syncing global state.',
+  'Map.dev runtime v4.2 active.',
+  'Compiling assets...',
+  '[WARN] Trace variance detected (ignored).',
+  'Security check: Passed.',
+  'Routing incoming connections.',
+  'Ready to build.'
+];
+
+function addTerminalLog() {
+  if (!bgTerminal) return;
+  const line = document.createElement('div');
+  line.textContent = logLines[Math.floor(Math.random() * logLines.length)];
+  bgTerminal.appendChild(line);
+  
+  if (bgTerminal.childElementCount > 15) {
+    bgTerminal.removeChild(bgTerminal.firstChild);
+  }
+  
+  setTimeout(addTerminalLog, Math.random() * 2000 + 500);
+}
+
+// Start effects
+setTimeout(typeCode, 1000);
+setTimeout(addTerminalLog, 500);
