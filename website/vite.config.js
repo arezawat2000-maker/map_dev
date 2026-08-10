@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite';
 
+// Firebase Hosting uses root `/`. GitHub Pages sets VITE_BASE=/map_dev/ in CI.
 export default defineConfig({
-  // Project Pages URL: https://arezawat2000-maker.github.io/map_dev/
-  base: '/map_dev/',
+  base: process.env.VITE_BASE || '/',
   root: '.',
   publicDir: 'public',
   server: {

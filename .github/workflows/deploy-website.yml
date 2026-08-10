@@ -38,6 +38,8 @@ jobs:
         run: npm ci
 
       - name: Build
+        env:
+          VITE_BASE: /map_dev/
         run: npm run build
 
       - name: Upload Pages artifact
