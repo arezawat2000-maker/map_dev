@@ -1,17 +1,44 @@
-# map_dev
+# MAP.DEV
 
-A new Flutter project.
+Flutter apps + marketing website for MAP.DEV app requests.
 
-## Getting Started
+## Apps
 
-This project is a starting point for a Flutter application.
+| App | Role | Location |
+| --- | --- | --- |
+| **User** | End users: submit & track app requests | repo root (this project) |
+| **Admin** | Team: view all requests & update status | [`admin/`](admin/) |
+| **Website** | Public marketing + request form | [`website/`](website/) |
 
-A few resources to get you started if this is your first Flutter project:
+Both Flutter apps and the website share Firebase Realtime Database path `requests`.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Run user app
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+From the repo root:
+
+```bash
+flutter pub get
+flutter run
+```
+
+## Run admin app
+
+```bash
+cd admin
+flutter pub get
+flutter run
+```
+
+## Run website
+
+```bash
+cd website
+npm install
+npm run dev
+```
+
+## Request model (`requests/{id}`)
+
+- `app_name`, `app_description`, `requester_name`, `contact`, `phone_number`
+- `status`: `pending` | `reviewing` | `accepted` | `in_progress` | `completed` | `declined`
+- `timestamp` (ISO-8601)

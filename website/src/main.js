@@ -100,6 +100,7 @@ async function submitToFirebase(payload) {
     },
     body: JSON.stringify({
       ...payload,
+      status: 'pending',
       timestamp: new Date().toISOString()
     }),
   });

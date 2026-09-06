@@ -1,31 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:map_dev/main.dart';
+import 'package:map_dev/models/app_request.dart';
+import 'package:map_dev/user/user_app.dart';
+import 'package:map_dev/widgets/status_chip.dart';
 
 void main() {
-  testWidgets('RequestCard renders request details', (WidgetTester tester) async {
+  testWidgets('User home shows request and track actions', (WidgetTester tester) async {
+    await tester.pumpWidget(const MapDevUserApp());
+
+    expect(find.text('MAP.DEV'), findsOneWidget);
+    expect(find.text('Request an app'), findsOneWidget);
+    expect(find.text('My requests'), findsOneWidget);
+  });
+
+  testWidgets('StatusChip shows label', (WidgetTester tester) async {
     await tester.pumpWidget(
-      MaterialApp(
-        home: Scaffold(
-          body: RequestCard(
-            request: {
-              'app_name': 'Demo App',
-              'app_description': 'A sample request description',
-              'requester_name': 'Jane Doe',
-              'contact': 'jane@example.com',
-              'phone_number': '+1234567890',
-              'timestamp': '2026-01-15T10:30:00.000Z',
-            },
-          ),
-        ),
+      const MaterialApp(
+        home: Scaffold(body: StatusChip(status: AppRequest.statusInProgress)),
       ),
     );
-
-    expect(find.text('DEMO APP'), findsOneWidget);
-    expect(find.text('A sample request description'), findsOneWidget);
-    expect(find.text('Jane Doe'), findsOneWidget);
-    expect(find.text('jane@example.com'), findsOneWidget);
-    expect(find.text('+1234567890'), findsOneWidget);
+    expect(find.text('IN PROGRESS'), findsOneWidget);
   });
 }
