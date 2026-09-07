@@ -10,7 +10,8 @@ class StatusChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = MapDevTheme.statusColor(status);
+    final stage = AppRequest.displayStage(status);
+    final color = MapDevTheme.statusColor(stage);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
@@ -19,7 +20,7 @@ class StatusChip extends StatelessWidget {
         border: Border.all(color: color.withValues(alpha: 0.45)),
       ),
       child: Text(
-        AppRequest.statusLabel(status).toUpperCase(),
+        AppRequest.statusLabel(stage).toUpperCase(),
         style: TextStyle(
           color: color,
           fontSize: 11,

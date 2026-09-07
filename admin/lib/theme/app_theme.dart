@@ -93,10 +93,7 @@ class MapDevTheme {
 
   static Color statusColor(String status) {
     switch (status) {
-      case 'reviewing':
-        return amber;
       case 'accepted':
-        return cyan;
       case 'in_progress':
         return cyan;
       case 'completed':
@@ -104,6 +101,7 @@ class MapDevTheme {
       case 'declined':
         return red;
       case 'pending':
+      case 'reviewing':
       default:
         return muted;
     }

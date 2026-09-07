@@ -1,4 +1,4 @@
-package com.mapdev.map_dev_admin
+package com.mapdev.admin
 
 import io.flutter.embedding.android.FlutterActivity
 

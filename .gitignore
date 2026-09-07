@@ -49,6 +49,7 @@ app.*.map.json
 .env.*
 !.env.example
 **/key.properties
+**/PLAY_SIGNING_SECRETS.txt
 **/*.jks
 **/*.keystore
 **/Secrets.xcconfig

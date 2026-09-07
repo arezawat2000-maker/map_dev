@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "539706215164",
+    "firebase_url": "https://map-dev-19fb0-default-rtdb.firebaseio.com",
     "project_id": "map-dev-19fb0",
     "storage_bucket": "map-dev-19fb0.firebasestorage.app"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.mapdev.map_dev"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "539706215164-8gga299u5juum9vcfh7tkn3okfks98fd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mapdev.map_dev",
+            "certificate_hash": "9103b90b30a489227eb275a044cf10e68ed4e085"
+          }
+        },
+        {
+          "client_id": "539706215164-ip95ptdfqr7iot3tuajr9orhp2uvpas4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDcAe5yz_zyxa-pyIWBFgBXvy-_hitf88o"
@@ -20,7 +34,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "539706215164-ip95ptdfqr7iot3tuajr9orhp2uvpas4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "539706215164-htbvi8fmk8feq1b31f2mmhpflr617p61.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mapdev.map-dev"
+              }
+            }
+          ]
         }
       }
     }

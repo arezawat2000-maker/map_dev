@@ -38,11 +38,31 @@ class RequestRepository {
     return newRef.key!;
   }
 
-  Future<void> updateStatus(String id, String status) async {
-    final normalized = AppRequest.allStatuses.contains(status)
-        ? status
+  /// Updates status. When accepting, pass [estimatedDuration] (required by UI).
+  Future<void> updateStatus(
+    String id,
+    String status, {
+    String? estimatedDuration,
+  }) async {
+    final stage = AppRequest.displayStage(status);
+    final writable = AppRequest.selectableStatuses.contains(stage)
+        ? stage
         : AppRequest.statusPending;
-    await _ref.child(id).update({'status': normalized});
+
+    final updates = <String, dynamic>{'status': writable};
+    if (estimatedDuration != null) {
+      final trimmed = estimatedDuration.trim();
+      if (trimmed.isNotEmpty) {
+        updates['estimated_duration'] = trimmed;
+      }
+    }
+    await _ref.child(id).update(updates);
+  }
+
+  Future<void> updateEstimatedDuration(String id, String duration) async {
+    final trimmed = duration.trim();
+    if (trimmed.isEmpty) return;
+    await _ref.child(id).update({'estimated_duration': trimmed});
   }
 
   List<AppRequest> _parseList(DataSnapshot snapshot) {

@@ -2,6 +2,19 @@ import 'package:firebase_database/firebase_database.dart';
 
 import '../models/app_request.dart';
 
+/// Thrown when [RequestRepository.create] is blocked by an active request.
+class ActiveRequestException implements Exception {
+  final AppRequest active;
+
+  const ActiveRequestException(this.active);
+
+  String get statusLabel => AppRequest.statusLabel(active.status);
+
+  @override
+  String toString() =>
+      'You already have an app request in progress (${statusLabel.toLowerCase()}).';
+}
+
 /// Firebase Realtime Database access for app requests.
 class RequestRepository {
   RequestRepository({FirebaseDatabase? database})
@@ -32,17 +45,60 @@ class RequestRepository {
     });
   }
 
+  /// First active (non-done) request for [email], if any.
+  Future<AppRequest?> findActiveForEmail(String email) async {
+    final normalizedEmail = email.trim().toLowerCase();
+    if (normalizedEmail.isEmpty) return null;
+
+    final snapshot = await _ref.get();
+    final all = _parseList(snapshot);
+    for (final r in all) {
+      if (r.contact.trim().toLowerCase() != normalizedEmail) continue;
+      if (r.isActive) return r;
+    }
+    return null;
+  }
+
+  /// Creates a request, or throws [ActiveRequestException] if one is in progress.
   Future<String> create(AppRequest draft) async {
+    final normalized = AppRequest(
+      id: draft.id,
+      appName: draft.appName,
+      appDescription: draft.appDescription,
+      requesterName: draft.requesterName,
+      contact: draft.contact.trim().toLowerCase(),
+      phoneNumber: draft.phoneNumber.trim(),
+      status: draft.status,
+      estimatedDuration: draft.estimatedDuration,
+      timestamp: draft.timestamp,
+    );
+    final active = await findActiveForEmail(normalized.contact);
+    if (active != null) {
+      throw ActiveRequestException(active);
+    }
+
     final newRef = _ref.push();
-    await newRef.set(draft.toCreateMap());
+    await newRef.set(normalized.toCreateMap());
     return newRef.key!;
   }
 
-  Future<void> updateStatus(String id, String status) async {
-    final normalized = AppRequest.allStatuses.contains(status)
-        ? status
+  Future<void> updateStatus(
+    String id,
+    String status, {
+    String? estimatedDuration,
+  }) async {
+    final stage = AppRequest.displayStage(status);
+    final writable = AppRequest.selectableStatuses.contains(stage)
+        ? stage
         : AppRequest.statusPending;
-    await _ref.child(id).update({'status': normalized});
+    final updates = <String, dynamic>{'status': writable};
+    if (estimatedDuration != null) {
+      final trimmed = estimatedDuration.trim();
+      if (trimmed.isNotEmpty) {
+        updates['estimated_duration'] = trimmed;
+      }
+    }
+    await _ref.child(id).update(updates);
   }
 
   List<AppRequest> _parseList(DataSnapshot snapshot) {

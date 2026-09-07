@@ -1,8 +1,26 @@
 # MAP.DEV Admin
 
-Standalone Flutter admin app for reviewing and updating MAP.DEV app requests.
+Standalone Flutter admin app for MAP.DEV.
 
-Shares Firebase Realtime Database path `requests` with the user app and website.
+## Auth
+
+Google Sign-In. Access requires a Firestore doc at:
+
+```
+admin/{emailLowercased}
+  username: "YourName"
+```
+
+Unauthorized Google accounts are signed out with an access-denied message.
+
+## Navigation
+
+- **Users** — profiles from `users/{email}/informations/profile`; tap → Requests | Chat
+- **Posts** — create/edit/delete `posts/{id}` (shown on the user Posts tab)
+
+## Chat
+
+Same Firestore paths as the user app. Gear on Chat toggles `chat_enabled`. Admin always sends; user is gated. Admin bubbles show `username` from the admin registry; users see **Map.dev**.
 
 ## Run
 
@@ -11,13 +29,3 @@ cd admin
 flutter pub get
 flutter run
 ```
-
-## Features
-
-- List all requests from Firebase
-- Update request status (`pending`, `reviewing`, `accepted`, `in_progress`, `completed`, `declined`)
-
-## Related
-
-- User app: repo root (`flutter run`)
-- Website: `website/`
